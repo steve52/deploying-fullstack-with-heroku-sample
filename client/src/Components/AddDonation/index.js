@@ -30,7 +30,7 @@ export default class AddDonation extends Component {
       showForm: false,
       sending: true
     })
-    fetch('http://localhost:5000/donations', {
+    fetch('/donations', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
