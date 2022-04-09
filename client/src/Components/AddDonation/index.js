@@ -56,7 +56,6 @@ export default class AddDonation extends Component {
         content = (
           <form onSubmit={this.onSubmit}>
             Name: <input name="name" type="text" value={this.state.name} onChange={this.handleNameChange} />
-            <br />
             Amount: <input name="amount" type="number" value={this.state.amount} onChange={this.handleAmountChange} />
             <button type="submit">Submit</button>
           </form>
