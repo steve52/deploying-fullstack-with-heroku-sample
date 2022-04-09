@@ -1,5 +1,5 @@
 // setupWebSocket.js
-const Server = require("ws");
+const { Server } = require("ws");
 
 // accepts an http server (covered later)
 const setupWebSocket = (server) => {
