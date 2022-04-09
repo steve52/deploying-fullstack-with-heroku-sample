@@ -12,7 +12,7 @@ const getTotalDonations = (req, res) => {
   const getString = 'SELECT SUM(amount) FROM donations'; // select all rows from the 'donations' table
   return pool.query(getString) // send query to select all rows from the 'donations' table 
     .then(totalResult => {
-      return totalResult.rows[0].sum;
+      return totalResult.rows[0].sum || 0;
     })
     .catch(err => console.log(err));
 }
