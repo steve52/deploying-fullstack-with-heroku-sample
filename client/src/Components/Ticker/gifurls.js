@@ -25,7 +25,6 @@ const gifs = [
   "https://inmarket.com/wp-content/uploads/2017/03/Adweek_BrandShare_Eran_Mendel_Order_Drink.gif",
   "https://cdn.dribbble.com/users/985395/screenshots/2423047/santa_fitness.gif",
   "https://cdn.dribbble.com/users/244516/screenshots/1812685/untitled-2.gif",
-  "https://cdn.dribbble.com/users/244516/screenshots/2267050/shana_tova_loop_english.gif",
   "https://www.adweek.com/files/2016_Jul/Adweek_BrandShare_Eran_Mendel_Olympics_Eyewear.gif",
   "https://cdn.dribbble.com/users/244516/screenshots/1938406/year_of_the_sheep_2015.gif",
   "https://cdn.dribbble.com/users/244516/screenshots/1938406/year_of_the_sheep_2015.gif",
