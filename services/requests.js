@@ -10,7 +10,6 @@ const pool = new Pool({ // create connection to database
 
 const getTotalDonations = (req, res) => {
   const getString = 'SELECT SUM(amount) FROM donations'; // select all rows from the 'donations' table
-  console.log('~~ totalResult.rows[0].sum', totalResult.rows[0].sum);
   return pool.query(getString) // send query to select all rows from the 'donations' table 
     .then(totalResult => {
       return totalResult.rows[0].sum;
