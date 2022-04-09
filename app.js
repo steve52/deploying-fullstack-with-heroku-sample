@@ -39,36 +39,35 @@ app.post('/donations', (req, res) => {
   // console.log('Got a new donation', req.body);
   // const newDonation = new Donation(req.body);
 
-  // newDonation.save()
-  //     .then((donation) => {
-  //       console.log('donation', donation);
-
-  //       getDonationTotal(Donation)
-  //           .then((total) => {
-  //             const data = {
-  //               message_type: 'new_donation',
-  //               donation,
-  //               total,
-  //             };
-  //             console.log('Broadcast new total and donation', data);
-  //             broadcastNewDonation(JSON.stringify(data));
-  //           }).catch((err) => {
-  //             console.log('err', err);
-  //           });
-  //       res.send(`donation saved to database: ${newDonation}`);
-  //     })
-  //     .catch((err) => {
-  //       res.status(400).send('undable to save to database');
-  //     });
+  services.addDonationToDB()
+      .then((donation) => {
+        console.log('donation', donation);
+        services.getTotalDonations()
+            .then((total) => {
+              const data = {
+                message_type: 'new_donation',
+                donation,
+                total,
+              };
+              console.log('Broadcast new total and donation', data);
+              broadcastNewDonation(JSON.stringify(data));
+            }).catch((err) => {
+              console.log('err', err);
+            });
+        res.send(`donation saved to database: ${newDonation}`);
+      })
+      .catch((err) => {
+        res.status(400).send('undable to save to database');
+      });
 });
 
-app.get('/donations', (req, res) => {
-    services.getAllDonations(req, res);
-  // Donation.find({}, (err, donations) => {
-  //   if (err) res.send(err);
-  //   res.json(donations);
-  // });
-});
+// app.get('/donations', (req, res) => {
+//     services.getAllDonations(req, res);
+//   // Donation.find({}, (err, donations) => {
+//   //   if (err) res.send(err);
+//   //   res.json(donations);
+//   // });
+// });
 
 app.delete('/donations', (req, res) => {
   services.deleteAllDonations(req, res);
