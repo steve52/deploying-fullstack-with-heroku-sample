@@ -63,13 +63,9 @@ app.post('/donations', (req, res) => {
       });
 });
 
-// app.delete('/donations', (req, res) => {
-//   services.deleteAllDonations(req, res);
-//   // Donation.remove({}, (err) => {
-//   //   if (err) res.send(err);
-//   //   res.send('deleted all donations');
-//   // });
-// });
+app.delete('/donations', (req, res) => {
+  services.deleteAllDonations(req, res);
+});
 
 // Handles any requests that don't match the ones above
 app.get('*', (req,res) =>{

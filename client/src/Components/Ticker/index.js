@@ -55,7 +55,7 @@ export default class Ticker extends Component {
   render() {
     return (
       <div className="App">
-        <h2>Funds raised for The Joyful Heart Foundation - TEST</h2>
+        <h2>Funds raised for Irina's Birthday</h2>
         <h1>${this.state.total}</h1>
 
         {this.state.last_donation &&

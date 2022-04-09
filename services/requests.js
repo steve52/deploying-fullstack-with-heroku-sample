@@ -70,4 +70,11 @@ const addDonationToDB = (req, res) => {
 //     .catch(err => console.log(err));  
 // }
 
-module.exports = { getTotalDonations, addDonationToDB }
+const deleteAllDonations = (req, res) => {
+  const removeString = 'DELETE FROM "donations"'; // delete all items in the 'my_activities' table
+  pool.query(removeString) // send query delete all items in the 'my_activities' table
+    .then(res.send('All donations cleared!')) // send confirmation to the browser
+    .catch(err => console.log(err));  
+}
+
+module.exports = { deleteAllDonations, getTotalDonations, addDonationToDB }

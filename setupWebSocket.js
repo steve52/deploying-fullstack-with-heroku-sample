@@ -3,7 +3,6 @@ const { Server } = require("ws");
 
 // accepts an http server (covered later)
 const setupWebSocket = (server) => {
-  console.log('~~~ SET UP WEBSOCKET');
   // ws instance
 
   const wss = new Server({ noServer: true });
