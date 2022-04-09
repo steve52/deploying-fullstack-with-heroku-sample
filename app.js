@@ -83,10 +83,9 @@ app.get('*', (req,res) =>{
   res.sendFile(__dirname+'/build/index.html');
 });
 
-app.listen(PORT, (err) => { // start server and listen on specified port
+const server = app.listen(PORT, (err) => { // start server and listen on specified port
   if (err) console.log("Error in server setup")
   console.log(`App is running on ${PORT}`) // confirm server is running and log port to the console
 }) 
 
-const server = http.createServer(app);
 setupWebSocket(server);
