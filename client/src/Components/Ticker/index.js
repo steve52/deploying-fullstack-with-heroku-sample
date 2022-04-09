@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import urls from './gifurls';
 
+function formatNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
 export default class Ticker extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +59,7 @@ export default class Ticker extends Component {
     return (
       <div className="App">
         <h2>Funds raised for Irina's Birthday</h2>
-        <h1>${this.state.total}</h1>
+        <h1>${formatNumber(this.state.total)}</h1>
 
         {this.state.last_donation &&
           <div>
