@@ -3,11 +3,11 @@ const { Server } = require("ws");
 
 // accepts an http server (covered later)
 const setupWebSocket = (server) => {
-  console.log('~~~ SET UP WEBSOKET');
+  console.log('~~~ SET UP WEBSOCKET');
   // ws instance
   // const wss = new WebSocket.Server({ noServer: true });
 
-  const wss = new Server({ server });
+  const wss = new Server({ noServer: true, server });
   // // handle upgrade of the request
   server.on("upgrade", function upgrade(request, socket, head) {
     try {
