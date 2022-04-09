@@ -38,12 +38,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/donations', (req, res) => {
   services.addDonationToDB(req, res)
       .then((donation) => {
-        console.log('donation', donation);
+        console.log('donation', donation.rows[0]);
         services.getTotalDonations()
             .then((total) => {
               const data = {
                 message_type: 'new_donation',
-                donation,
+                donation: donation.rows[0],
                 total,
               };
               console.log('Broadcast new total and donation', data);
