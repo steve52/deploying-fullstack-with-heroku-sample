@@ -35,10 +35,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // });
 
 app.post('/donations', (req, res) => {
-  // services.addDonationToDB(req, res);
-  // console.log('Got a new donation', req.body);
-  // const newDonation = new Donation(req.body);
-
   services.addDonationToDB(req, res)
       .then((donation) => {
         console.log('donation', donation);
@@ -50,7 +46,12 @@ app.post('/donations', (req, res) => {
                 total,
               };
               console.log('Broadcast new total and donation', data);
-              broadcastNewDonation(JSON.stringify(data));
+              console.log('data', data);
+              wss.clients.forEach((client) => {
+                if (client.readyState === WebSocket.OPEN) {
+                  client.send(JSON.stringify(data));
+                }
+              });
             }).catch((err) => {
               console.log('err', err);
             });
@@ -61,21 +62,13 @@ app.post('/donations', (req, res) => {
       });
 });
 
-// app.get('/donations', (req, res) => {
-//     services.getAllDonations(req, res);
-//   // Donation.find({}, (err, donations) => {
+// app.delete('/donations', (req, res) => {
+//   services.deleteAllDonations(req, res);
+//   // Donation.remove({}, (err) => {
 //   //   if (err) res.send(err);
-//   //   res.json(donations);
+//   //   res.send('deleted all donations');
 //   // });
 // });
-
-app.delete('/donations', (req, res) => {
-  services.deleteAllDonations(req, res);
-  // Donation.remove({}, (err) => {
-  //   if (err) res.send(err);
-  //   res.send('deleted all donations');
-  // });
-});
 
 // Handles any requests that don't match the ones above
 app.get('*', (req,res) =>{
