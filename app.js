@@ -1,5 +1,8 @@
 const express = require('express'); // import express module (simplifies routing/requests, among other things)
 const cors = require('cors'); // import the CORS library to allow Cross-origin resource sharing
+const http = require('http'); 
+
+const setupWebSocket = require('./setupWebSocket')
 const app = express(); // create an instance of the express module (app is the conventional variable name used)
 var bodyParser = require('body-parser');
 
@@ -14,23 +17,76 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.get('/api/activities', (req, res) => { // route root directory ('/' is this file (app.js))
+// app.get('/api/activities', (req, res) => { // route root directory ('/' is this file (app.js))
 
-  services.getAllActivities(req, res);
+//   services.getAllActivities(req, res);
+// });
+
+// app.post('/api/activities', (req, res) => {
+//   services.addActivityToDB(req, res);
+// });
+
+// app.get('/api/activities/new', (req, res) => {
+//   services.getSingleActivity(req, res);
+// });
+
+// app.get('/api/activities/delete', (req, res) => {
+//   services.deleteAllActivites(req, res);
+// });
+
+app.post('/donations', (req, res) => {
+  services.addDonationToDB(req, res);
+  // console.log('Got a new donation', req.body);
+  // const newDonation = new Donation(req.body);
+
+  // newDonation.save()
+  //     .then((donation) => {
+  //       console.log('donation', donation);
+
+  //       getDonationTotal(Donation)
+  //           .then((total) => {
+  //             const data = {
+  //               message_type: 'new_donation',
+  //               donation,
+  //               total,
+  //             };
+  //             console.log('Broadcast new total and donation', data);
+  //             broadcastNewDonation(JSON.stringify(data));
+  //           }).catch((err) => {
+  //             console.log('err', err);
+  //           });
+  //       res.send(`donation saved to database: ${newDonation}`);
+  //     })
+  //     .catch((err) => {
+  //       res.status(400).send('undable to save to database');
+  //     });
 });
 
-app.post('/api/activities', (req, res) => {
-  services.addActivityToDB(req, res);
+app.get('/donations', (req, res) => {
+    services.getAllDonations(req, res);
+  // Donation.find({}, (err, donations) => {
+  //   if (err) res.send(err);
+  //   res.json(donations);
+  // });
 });
 
-app.get('/api/activities/new', (req, res) => {
-  services.getSingleActivity(req, res);
+app.delete('/donations', (req, res) => {
+  services.deleteAllDonations(req, res);
+  // Donation.remove({}, (err) => {
+  //   if (err) res.send(err);
+  //   res.send('deleted all donations');
+  // });
 });
 
-app.get('/api/activities/delete', (req, res) => {
-  services.deleteAllActivites(req, res);
+// Handles any requests that don't match the ones above
+app.get('*', (req,res) =>{
+  res.sendFile(__dirname+'/build/index.html');
 });
 
-app.listen(PORT, () => { // start server and listen on specified port
+app.listen(PORT, (err) => { // start server and listen on specified port
+  if (err) console.log("Error in server setup")
   console.log(`App is running on ${PORT}`) // confirm server is running and log port to the console
 }) 
+
+const server = http.createServer(app);
+setupWebSocket(server);

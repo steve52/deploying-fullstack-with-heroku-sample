@@ -8,6 +8,37 @@ const pool = new Pool({ // create connection to database
   }
 });
 
+const getAllDonations = (req, res) => {
+  console.log('~~~ get donations');
+  const getString = 'SELECT * FROM donations'; // select all rows from the 'donations' table
+  const countString = 'SELECT count(*) FROM donations' // get total row count from the 'donations' table
+  pool.query(getString) // send query to select all rows from the 'donations' table 
+    .then(donationResults => {
+      let donations = donationResults.rows;
+      pool.query(countString) // send query to get total row count from the 'my_activities' table
+        .then(countResult => {
+          let count = countResult.rows[0].count;
+          console.log('Activities List:', donations);
+          console.log(`Activities Count: ${count}`);
+          res.json({ donations, count})
+          // res.render('index', { activities: activities, count: count }); // render index.ejs, and send activity and count results to index.ejs
+          // TODO: Send info to frontend 
+        })
+    })
+    .catch(err => console.log(err));
+}
+
+const addDonationToDB = (req, res) => {
+  console.log('~~~ add donations');
+  const {name, amount} = [ req.body ]
+
+  const addString = 'INSERT INTO donations (name, amount) VALUES ($1, $2) RETURNING *'; // insert value into my_activities' table
+
+  pool.query(addString, [name, amount])
+    .then(result => res.json(result))
+    .catch(err => console.log(err));
+}
+
 const getAllActivities = (req, res) => {
   const getString = 'SELECT * FROM "my_activities"'; // select all rows from the 'my_activities' table
   const countString = 'SELECT count(*) FROM "my_activities"' // get total row count from the 'my_activities' table
@@ -51,4 +82,4 @@ const deleteAllActivites = (req, res) => {
     .catch(err => console.log(err));  
 }
 
-module.exports = { getSingleActivity, addActivityToDB, getAllActivities, deleteAllActivites }
+module.exports = { getSingleActivity, addActivityToDB, getAllActivities, deleteAllActivites, getAllDonations, addDonationToDB }
