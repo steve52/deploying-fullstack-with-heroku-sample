@@ -8,22 +8,14 @@ const pool = new Pool({ // create connection to database
   }
 });
 
-const getAllDonations = (req, res) => {
+const getTotalDonations = (req, res) => {
   console.log('~~~ get donations');
-  const getString = 'SELECT * FROM donations'; // select all rows from the 'donations' table
-  const countString = 'SELECT count(*) FROM donations' // get total row count from the 'donations' table
-  pool.query(getString) // send query to select all rows from the 'donations' table 
-    .then(donationResults => {
-      let donations = donationResults.rows;
-      pool.query(countString) // send query to get total row count from the 'my_activities' table
-        .then(countResult => {
-          let count = countResult.rows[0].count;
-          console.log('Activities List:', donations);
-          console.log(`Activities Count: ${count}`);
-          res.json({ donations, count})
-          // res.render('index', { activities: activities, count: count }); // render index.ejs, and send activity and count results to index.ejs
-          // TODO: Send info to frontend 
-        })
+  const getString = 'SELECT SUM(amount) FROM donations'; // select all rows from the 'donations' table
+  
+  return pool.query(getString) // send query to select all rows from the 'donations' table 
+    .then(total => {
+      console.log('Total Donations:', total);
+      return total;
     })
     .catch(err => console.log(err));
 }
@@ -84,4 +76,4 @@ const deleteAllActivites = (req, res) => {
     .catch(err => console.log(err));  
 }
 
-module.exports = { getSingleActivity, addActivityToDB, getAllActivities, deleteAllActivites, getAllDonations, addDonationToDB }
+module.exports = { getSingleActivity, addActivityToDB, getAllActivities, deleteAllActivites, getTotalDonations, addDonationToDB }

@@ -88,4 +88,32 @@ const server = app.listen(PORT, (err) => { // start server and listen on specifi
   console.log(`App is running on ${PORT}`) // confirm server is running and log port to the console
 }) 
 
-setupWebSocket(server);
+const wss = setupWebSocket(server);
+
+// what to do after a connection is established
+wss.on("connection", (ctx) => {
+  // print number of active connections
+  console.log("connected", wss.clients.size);
+
+  // handle message events
+  // receive a message and echo it back
+  ctx.on("message", (message) => {
+    console.log(`Received message => ${message}`);
+    ctx.send(`you said ${message}`);
+  });
+
+  // handle close event
+  ctx.on("close", () => {
+    console.log("closed", wss.clients.size);
+  });
+
+  // sent a message that we're good to proceed
+  ctx.send("connection established.");
+  
+  services.getTotalDonations().then(total => {
+    ctx.send(JSON.stringify({
+      message: 'current_total',
+      total,
+    }));
+  });
+});
