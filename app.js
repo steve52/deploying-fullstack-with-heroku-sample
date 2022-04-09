@@ -35,11 +35,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // });
 
 app.post('/donations', (req, res) => {
-  services.addDonationToDB(req, res);
+  // services.addDonationToDB(req, res);
   // console.log('Got a new donation', req.body);
   // const newDonation = new Donation(req.body);
 
-  services.addDonationToDB()
+  services.addDonationToDB(req, res)
       .then((donation) => {
         console.log('donation', donation);
         services.getTotalDonations()
