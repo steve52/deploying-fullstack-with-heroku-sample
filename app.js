@@ -63,7 +63,7 @@ app.post('/donations', (req, res) => {
       });
 });
 
-app.delete('/donations', (req, res) => {
+app.get('/startover', (req, res) => {
   services.deleteAllDonations(req, res);
 });
 
