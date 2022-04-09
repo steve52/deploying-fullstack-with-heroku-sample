@@ -39,6 +39,9 @@ export default class Ticker extends Component {
   }
   _handleMessage = (message) => {
     console.log('message', message);
+    if (message.data === 'connection established.') {
+      return;
+    }
     const data = JSON.parse(message.data);
     this.setState({
       total: data.total,
