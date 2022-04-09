@@ -29,9 +29,11 @@ const getAllDonations = (req, res) => {
 }
 
 const addDonationToDB = (req, res) => {
-  console.log('~~~ add donations');
-  const {name, amount} = [ req.body ]
+  console.log('~~~ add donations', req.body);
+  const name = req.body.name;
+  const amount = req.body.amount;
 
+  console.log('~~~ ', name, amount);
   const addString = 'INSERT INTO donations (name, amount) VALUES ($1, $2) RETURNING *'; // insert value into my_activities' table
 
   pool.query(addString, [name, amount])
