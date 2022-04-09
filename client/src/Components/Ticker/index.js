@@ -20,7 +20,8 @@ export default class Ticker extends Component {
   }
 
   _connectToServer = () => {
-    let ws = new WebSocket('ws://localhost:8080');
+    const HOST = window.location.origin.replace(/^http/, 'ws')
+    const ws = new WebSocket(HOST);
     ws.onerror = (err) => {
       console.log('err', err);
       this.setState({
