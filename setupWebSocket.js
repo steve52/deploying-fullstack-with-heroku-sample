@@ -5,7 +5,7 @@ const WebSocket = require("ws");
 const setupWebSocket = (server) => {
   console.log('~~~ SET UP WEBSOKET');
   // ws instance
-  const wss = new WebSocket.Server({ port: 8080 });
+  const wss = new WebSocket.Server({ noServer: true });
 
   // // handle upgrade of the request
   // server.on("upgrade", function upgrade(request, socket, head) {
